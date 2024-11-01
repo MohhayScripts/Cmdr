@@ -155,6 +155,7 @@ local Registry = {
 		"Data",
 		"Group",
 		"Guards",
+		"MinimumRole", -- This is custom behaviour!
 	}),
 	CommandArgProps = Util.MakeDictionary({ "Name", "Type", "Description", "Optional", "Default" }),
 	Types = {},
@@ -343,6 +344,16 @@ function Registry:RegisterCommand(
 		typeof(commandObject) == "table",
 		`[Cmdr] Invalid return value from command script "{commandScript.Name}" (CommandDefinition expected, got {typeof(commandObject)})`
 	)
+
+	----------------------
+	-- Custom Behaviour --
+	----------------------
+	if RunService:IsClient() and self._AdminRank and type(self._AdminRank) == "number" and self._AdminRoleToRankConversion then
+		if self._AdminRank < self._AdminRoleToRankConversion[commandObject.MinimumRole] then
+			return
+		end
+	end
+	----------------------
 
 	if commandServerScript then
 		assert(RunService:IsServer(), "[Cmdr] The commandServerScript parameter is not valid for client usage.")
@@ -565,6 +576,42 @@ function Registry:FlushAutoExecBuffer()
 	end
 
 	self.AutoExecBuffer = {}
+end
+
+--[=[
+	(**Custom Behaviour**)
+
+	Registers the Admin rank on the client.
+
+	The `rank` parameter should be AdminPermissionsService:GetRank(player).
+
+	@param rank number
+
+	@client
+	@within Registry
+]=]
+function Registry:_RegisterAdminRank(rank: number)
+	assert(RunService:IsClient(), "[Cmdr] _RegisterAdminRank cannot be called from the server.")
+
+	self._AdminRank = rank
+end
+
+--[=[
+	(**Custom Behaviour**)
+
+	Registers the Admin role to rank conversion on the client.
+
+	The `conversionDictionary` parameter should be AdminPermissionsService:GetRoleToRankDictionary().
+
+	@param conversionDictionary {[string]: number}
+
+	@client
+	@within Registry
+]=]
+function Registry:_RegisterRoleToRankConversion(conversionDictionary: {[string]: number})
+	assert(RunService:IsClient(), "[Cmdr] _RegisterRoleToRankConversion cannot be called from the server.")
+
+	self._AdminRoleToRankConversion = conversionDictionary
 end
 
 return function(cmdr)
