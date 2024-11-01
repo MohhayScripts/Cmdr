@@ -353,7 +353,7 @@ function Registry:RegisterCommand(
 			return
 		end
 
-		if self._AdminRank < self._AdminRoleToRankConversion[commandObject.MinimumRole or "Trial Moderator"] then
+		if self._AdminRank < self._AdminRoleToRankConversion[commandObject.MinimumRole or "Upper Group Leadership"] then
 			return
 		end
 	end
