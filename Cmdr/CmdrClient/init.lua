@@ -206,6 +206,15 @@ end
 -- "Only register when we aren't in studio because don't want to overwrite what the server portion did"
 -- This is legacy code which predates Accurate Play Solo (which is now the only way to test in studio), this code will never run.
 if RunService:IsServer() == false then
+	----------------------
+	-- Custom behaviour --
+	----------------------
+	local Astronet = require(game:GetService("ReplicatedStorage"):WaitForChild("AstronetClient"))
+
+	Cmdr.Registry:_RegisterAdminRank(Astronet.Shared.adminRank)
+	Cmdr.Registry:_RegisterRoleToRankConversion(Astronet.Shared.adminRoleToRankDictionary)
+	----------------------
+
 	Cmdr.Registry:RegisterTypesIn(script:WaitForChild("Types"))
 	Cmdr.Registry:RegisterCommandsIn(script:WaitForChild("Commands"))
 end

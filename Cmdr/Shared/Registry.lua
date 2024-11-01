@@ -349,11 +349,11 @@ function Registry:RegisterCommand(
 	-- Custom Behaviour --
 	----------------------
 	if RunService:IsClient() then
-		if not self._AdminRank or not type(self._AdminRank) == "number" or not self._AdminRoleToRankConversion then
+		if not self._AdminRank or not self._AdminRoleToRankConversion then
 			return
 		end
 
-		if self._AdminRank < self._AdminRoleToRankConversion[commandObject.MinimumRole] then
+		if self._AdminRank < self._AdminRoleToRankConversion[commandObject.MinimumRole or "Trial Moderator"] then
 			return
 		end
 	end
