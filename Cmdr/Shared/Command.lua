@@ -38,6 +38,12 @@ function Command.new(options)
 		Data = options.Data, -- A special container for any additional data the command needs to collect from the client
 		Response = nil, -- Will be set at the very end when the command is run and a string is returned from the Run function.
 		Guards = options.Guards, -- A table of functions where the command will be interrupted if a string is returned
+
+		----------------------
+		-- Custom Behaviour --
+		----------------------
+		MinimumRole = options.CommandObject.MinimumRole, -- A role name that can be used to restrict certain commands to certain admin ranks.
+		----------------------
 	}
 
 	setmetatable(self, Command)
