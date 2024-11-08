@@ -123,7 +123,7 @@ return function(Cmdr)
 			else
 				Window:SetIsValidInput(
 					false,
-					("%q is not a valid command name. Use the help command to see all available commands."):format(
+					("%q is not a valid command name. Use the cmds command to see all available commands."):format(
 						commandText
 					)
 				)
@@ -150,7 +150,7 @@ return function(Cmdr)
 			return AutoComplete:Show(acItems)
 		end
 
-		Window:SetIsValidInput(false, "Use the help command to see all available commands.")
+		Window:SetIsValidInput(false, "Use the cmds command to see all available commands.")
 		AutoComplete:Hide()
 	end
 
