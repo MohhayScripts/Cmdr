@@ -74,7 +74,7 @@ function Dispatcher:Evaluate(text: string, executor: Player, allowIncompleteArgu
 		end
 	else
 		return false,
-			("%q is not a valid command name. Use the 'commands' command to see all available commands."):format(
+			("%q is not a valid command name. Use the 'help' command to see all available commands."):format(
 				tostring(commandName)
 			)
 	end
