@@ -28,6 +28,7 @@ local playerType = {
 		me = ".",
 		all = "*",
 		others = "**",
+		nearby = "***",
 		random = "?",
 	},
 }

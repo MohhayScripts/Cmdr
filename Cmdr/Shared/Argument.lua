@@ -1,3 +1,5 @@
+local Players = game:GetService("Players")
+
 local Util = require(script.Parent.Util)
 
 local function unescapeOperators(text)
@@ -212,7 +214,7 @@ function Argument:Transform()
 					self.RawSegmentsAreAutocomplete = true
 				end
 			end
-		elseif rawValue == "*" or rawValue == "**" then
+		elseif rawValue == "*" or rawValue == "**" or rawValue == "***" then
 			local strings, options = self:GetDefaultAutocomplete()
 
 			if not options.IsPartial and #strings > 0 then
@@ -222,6 +224,34 @@ function Argument:Transform()
 					for i, string in ipairs(strings) do
 						if string == defaultString then
 							table.remove(strings, i)
+						end
+					end
+				elseif rawValue == "***" and self.Type.Default then -- CUSTOM IMPLEMENTATION!
+					if not self.Executor.Character then
+						table.clear(strings)
+					end
+
+					local defaultString = self.Type.Default(self.Executor) or ""
+
+					for _, Player in Players:GetPlayers() do
+						for i, string in ipairs(strings) do
+							if string ~= self.Type.Default(Player) then
+								continue
+							end
+
+							if string == defaultString then -- Exclude the executor of the command.
+								table.remove(strings, i)
+								continue
+							end
+
+							if not Player.Character then -- Target player's character does not exist, remove them from list.
+								table.remove(strings, i)
+								continue
+							end
+
+							if (self.Executor.Character:GetPivot().Position - Player.Character:GetPivot().Position).Magnitude > 225 then
+								table.remove(strings, i)
+							end
 						end
 					end
 				end

@@ -4,6 +4,7 @@ Argument Shorthands
 .   Me/Self
 *   All/Everyone
 **  Others
+*** Nearby
 ?   Random
 ?N  List of N random values
 ]]
