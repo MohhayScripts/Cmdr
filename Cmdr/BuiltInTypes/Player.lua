@@ -1,5 +1,8 @@
 local Util = require(script.Parent.Parent.Shared.Util)
-local PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
+local PlayersController
+if game:GetService("RunService"):IsClient() then
+	PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
+end
 
 local playerType = {
 	Transform = function(text)
