@@ -1,4 +1,5 @@
-local Players = game:GetService("Players")
+local PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
+local CharactersFolder = workspace:WaitForChild("Characters")
 
 local Util = require(script.Parent.Util)
 
@@ -227,13 +228,14 @@ function Argument:Transform()
 						end
 					end
 				elseif rawValue == "***" and self.Type.Default then -- CUSTOM IMPLEMENTATION!
-					if not self.Executor.Character then
+					local executorCharacter = CharactersFolder:FindFirstChild(self.Executor.Name) or CharactersFolder:FindFirstChild(self.Executor.Name.."_Corpse")
+					if not executorCharacter then
 						table.clear(strings)
 					end
 
 					local defaultString = self.Type.Default(self.Executor) or ""
 
-					for _, Player in Players:GetPlayers() do
+					for _, Player in PlayersController:GetPlayers() do
 						for i, string in ipairs(strings) do
 							if string ~= self.Type.Default(Player) then
 								continue
@@ -244,12 +246,14 @@ function Argument:Transform()
 								continue
 							end
 
-							if not Player.Character then -- Target player's character does not exist, remove them from list.
+							local targetCharacter = CharactersFolder:FindFirstChild(Player.Name) or CharactersFolder:FindFirstChild(Player.Name.."_Corpse")
+							-- Target player's character does not exist, remove them from list.
+							if not targetCharacter then
 								table.remove(strings, i)
 								continue
 							end
 
-							if (self.Executor.Character:GetPivot().Position - Player.Character:GetPivot().Position).Magnitude > 225 then
+							if (executorCharacter:GetPivot().Position - targetCharacter:GetPivot().Position).Magnitude > 225 then
 								table.remove(strings, i)
 							end
 						end

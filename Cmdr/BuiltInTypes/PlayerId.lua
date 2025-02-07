@@ -1,5 +1,6 @@
 local Util = require(script.Parent.Parent.Shared.Util)
 local Players = game:GetService("Players")
+local PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
 
 local nameCache = {}
 local function getUserId(name)
@@ -25,7 +26,7 @@ local playerIdType = {
 	Prefixes = "# positiveInteger",
 
 	Transform = function(text)
-		local findPlayer = Util.MakeFuzzyFinder(Players:GetPlayers())
+		local findPlayer = Util.MakeFuzzyFinder(PlayersController:GetPlayers())
 
 		return text, findPlayer(text)
 	end,
@@ -50,6 +51,7 @@ local playerIdType = {
 		me = ".",
 		all = "*",
 		others = "**",
+		nearby = "***",
 		random = "?",
 	},
 }

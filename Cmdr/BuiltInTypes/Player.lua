@@ -1,9 +1,9 @@
 local Util = require(script.Parent.Parent.Shared.Util)
-local Players = game:GetService("Players")
+local PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
 
 local playerType = {
 	Transform = function(text)
-		local findPlayer = Util.MakeFuzzyFinder(Players:GetPlayers())
+		local findPlayer = Util.MakeFuzzyFinder(PlayersController:GetPlayers())
 
 		return findPlayer(text)
 	end,
