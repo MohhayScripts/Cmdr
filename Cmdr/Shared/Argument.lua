@@ -1,7 +1,4 @@
-local PlayersController
-if game:GetService("RunService"):IsClient() then
-	PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
-end
+local PlayersController = require(game:GetService("ReplicatedStorage"):WaitForChild("Controllers").PlayersController)
 local CharactersFolder = workspace:WaitForChild("Characters")
 
 local Util = require(script.Parent.Util)
