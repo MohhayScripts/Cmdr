@@ -1,3 +1,5 @@
+-- TODO: Make faction type (instead of team, using faction system)
+
 local Teams = game:GetService("Teams")
 local Util = require(script.Parent.Parent.Shared.Util)
 
